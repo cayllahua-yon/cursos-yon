@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="e">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Declarativo con React</title>
+    <style>
+         button {
+            background: #09f ;
+            border: 0;
+            color: #fff;
+            padding: 4px 8px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        body {
+            background: #222;
+            color: #fff;
+            font-family: system-ui;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app"></div>
+
+
+    <script type="module" >
+        import React from "https://esm.sh/react@18.2.0";
+        import ReactDOMClient from "https://esm.sh/react-dom@18.2.0/client";
+        const appDomElement = document.getElementById('app');
+        const root = ReactDOMClient.createRoot(appDomElement);
+        // hay que crear el elemento para renderizar REACT
+        // const  button = React.createElement('button',null, 'Me gusta');
+        const  button = React.createElement('button',{"data-id": 123}, 'Me gusta 1');
+        const  button2 = React.createElement('button',{"data-id": 456}, 'Me gusta 2');
+        const  button3 = React.createElement('button',{"data-id": 789}, 'Me gusta 3');
+
+        //Envoltura de los elementos
+        const  app = React.createElement(React.Fragment, null, [button, button2, button3]);
+
+        // ahora si podemos renderizar nuestro primer ELEMENTO
+        // root.render('Hola React')
+        // root.render(button, button2, button3) // No podemos renderizar mas de 1 elemento ala vez
+        //La solucion es envolviendo el elemnto en este caso mendiante un DIV
+        root.render(app) 
+
+
+    </script>
+</body>
+</html>
