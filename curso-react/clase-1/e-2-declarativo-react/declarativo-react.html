@@ -27,25 +27,38 @@
 
     <script type="module" >
         import React from "https://esm.sh/react@18.2.0";
-        import ReactDOMClient from "https://esm.sh/react-dom@18.2.0/client";
+        import ReactDOM from "https://esm.sh/react-dom@18.2.0/client";
         const appDomElement = document.getElementById('app');
-        const root = ReactDOMClient.createRoot(appDomElement);
+        const root = ReactDOMC.createRoot(appDomElement); //*******************************************
         // hay que crear el elemento para renderizar REACT
         // const  button = React.createElement('button',null, 'Me gusta');
-        const  button = React.createElement('button',{"data-id": 123}, 'Me gusta 1');
+        const  button = React.createElement('button',{"data-id": 123}, 'Me gusta 1'); // creando el elemento button
         const  button2 = React.createElement('button',{"data-id": 456}, 'Me gusta 2');
-        const  button3 = React.createElement('button',{"data-id": 789}, 'Me gusta 3');
+        const  button3 = React.createElement('button',{"data-id": 789}, 'Me gusta 3'); // NOTA asi mismo no se puede renderizar mas de un elemento ala vez
 
         //Envoltura de los elementos
         const  app = React.createElement(React.Fragment, null, [button, button2, button3]);
 
         // ahora si podemos renderizar nuestro primer ELEMENTO
-        // root.render('Hola React')
+        // root.render('Hola React') //******************************************************
+        // root.render('<button> Hola React </button>')   // no va poder renderizar esto , pero si crear un elemento
         // root.render(button, button2, button3) // No podemos renderizar mas de 1 elemento ala vez
         //La solucion es envolviendo el elemnto en este caso mendiante un DIV
         root.render(app) 
 
+        // JSX permite de una forma mas declarativa
+        // <React.Fragment>
+        //     <button data-id="123">Me gusta 1</button>
+        //     <button data-id="456">Me gusta 2</button>
+        //     <button data-id="789">Me gusta 3</button>        
+        // </React.Fragment>
 
+        //const element = <strong> Numero Aleatorio {Math.random()}</strong>  //voy evaluar la exprecion MATH.RANDOM
+        
+        // entre llaves puedes poner expreciones y no declaraciones ..entones un if no podria ir dentro.. porque es una declaracion
+        // cosas que devuelva un valor 
+        
+        // Aplicaciones  SWC Babel
     </script>
 </body>
 </html>
