@@ -22,7 +22,7 @@ const WINNER_COMBOS = [
 
 //Un componente
 const Square = ({children,isSelected, updateBoard, index}) => {
-  const classNameSquare = `square ${isSelected ? 'is-selected' : ''}`; // square
+  const classNameSquare = `square ${isSelected ? 'is-selected' : ' '}`; // square
     
   const handleClick = () => {
     updateBoard(index)

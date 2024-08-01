@@ -16,7 +16,7 @@ import {resetGameStorage, saveGameStorage} from './logic/storage/index.js'
 //  useEffect(codeToExecute, ListOfDependencies) // como minimo se ejecuitara 1 vez
 // useEffect(()=>{
 // console.log('Ejecutando el codigo')
-// },[])
+// },[turn, board]) -> las DEPEDENCIAS => []-> solo renderiza una zola vez.. 
 //Segundo parametro es opcional, si no se pasa, se ejecutara cada vez  que se renderice el componente
 
 
