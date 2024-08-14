@@ -1,0 +1,2 @@
+como arias de detectar en el test que realmente cuando acemos click cambia la imagen 
+guardar algunas variables
