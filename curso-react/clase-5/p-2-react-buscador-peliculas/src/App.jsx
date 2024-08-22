@@ -2,7 +2,9 @@ import './App.css'
 // import withoutResult from '../mocks/no-results.json'
 import { useMovies } from '../hooks/useMovies'
 import { Movies } from '../components/Movies'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
+// INSTALAR  npm install just-debounce-it -E
+import debounce from 'just-debounce-it'
 
 function useSearch() {
   const [search, setSearch] = useState('')
@@ -37,13 +39,24 @@ function useSearch() {
 
 
 function App() {
-  const {movies} = useMovies()
+
+  const [sort, setSort] = useState(false)
   // const inputRef = useRef()
-const { search, setSearch, error } = useSearch()
+
+  const { search, setSearch, error } = useSearch()
+  const {movies, getMovies, loading} = useMovies({search, sort}) // aqui pasamos el search
 
   // const counter = useRef(0);
   // counter.current++ 
   // console.log(counter.current)
+  const debouncedGetMovies = useCallback( 
+    debounce(search => {
+      console.log('search', search)
+      getMovies({search})
+    }, 500)
+  , [getMovies]
+ )
+
   
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -56,16 +69,23 @@ const { search, setSearch, error } = useSearch()
     // console.log(query)
 
     // const {query} = Object.fromEntries(new window.FormData(event.target))
-    console.log(search)
+
+    getMovies({search})
+    
+  }
+
+  const handleSort = () => {
+    setSort(!sort)
   }
 
   const handleChange = (event) => {
     const newQuery = event.target.value
     // setQuery(event.target.value)
     if (newQuery.startsWith(' ')) return  // evitando dar espacio al inicio
-
     setSearch(newQuery)
     //validaciones
+    // getMovies({search: newQuery})
+    debouncedGetMovies(newQuery)
  
   }
 
@@ -79,6 +99,7 @@ const { search, setSearch, error } = useSearch()
           {/* <input onChange={handleChange} value={query}  name='query' ref={inputRef} type="text" placeholder='Avenger, Star Wars ...' /> */}
           <input onChange={handleChange} value={search}  name='search' type="text" placeholder='Avenger, Star Wars ...' style={{border: '1px solid transparent' , borderColor: error ? 'red' : 'transparent'}} />
           {/* no controlado -> required pattern='' onValue */}
+          <input type="checkbox" onChange={handleSort} checked={sort} name="" id="" />
           <button  type='submit'>Buscar</button>
         </form>
         {error && <p style={{color: 'red'}}>{error}</p>}
@@ -86,8 +107,10 @@ const { search, setSearch, error } = useSearch()
       
       <main>
         {/* Aquí los resultados de busqueda */}
-      
-      <Movies movies={movies} />
+
+        {
+          loading ? <p>Cargando...</p> :  <Movies movies={movies} />
+        }      
         
       </main>
     </>
