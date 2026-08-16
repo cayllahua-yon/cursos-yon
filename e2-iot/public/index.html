@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dashboard IoT Profesional</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        text-align: center;
+        padding: 50px;
+        background-color: #f4f4f4;
+      }
+      .card {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+        margin: auto;
+      }
+      h1 {
+        color: #333;
+      }
+      #valor {
+        font-size: 3em;
+        color: #2196f3;
+        font-weight: bold;
+      }
+      .btn {
+        padding: 15px 30px;
+        font-size: 1.2em;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        margin: 10px;
+        color: white;
+      }
+      .btn-on {
+        background-color: #4caf50;
+      }
+      .btn-off {
+        background-color: #f44336;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>Monitor de Temperatura</h1>
+      <p>Lectura en tiempo real:</p>
+      <div id="valor">-- °C</div>
+
+      <hr />
+
+      <h2>Control de Luz</h2>
+      <button class="btn btn-on" onclick="enviarComando('ON')">Encender</button>
+      <button class="btn btn-off" onclick="enviarComando('OFF')">Apagar</button>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script>
+      const socket = io(); // Conectar al Backend
+
+      // 1. Escuchar datos del servidor (sensor)
+      socket.on("dato_sensor", (dato) => {
+        document.getElementById("valor").innerText = dato + " °C";
+      });
+
+      // 2. Enviar comandos al servidor (actuador)
+      function enviarComando(estado) {
+        socket.emit("comando_luz", estado);
+      }
+    </script>
+  </body>
+</html>
